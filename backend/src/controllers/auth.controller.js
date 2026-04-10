@@ -1,5 +1,6 @@
 require("dotenv").config();
 const userModel = require("../models/user.model");
+const blacklistTokenModel = require("../models/blacklisttoken.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -101,4 +102,27 @@ async function loginUserController(req, res) {
   });
 }
 
-module.exports = { registerUserController, loginUserController };
+/**
+ * @name logoutUserController
+ * @description token blacklisting and clear cookie
+ * @access Public
+ */
+async function logoutUserController(req, res) {
+  const token = req.cookies.token;
+
+  if (token) {
+    await blacklistTokenModel.create({ token });
+  }
+
+  res.clearCookie("token");
+
+  res.status(200).json({
+    message: "user logged out successfully",
+  });
+}
+
+module.exports = {
+  registerUserController,
+  loginUserController,
+  logoutUserController,
+};
