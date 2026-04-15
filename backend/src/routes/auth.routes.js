@@ -31,7 +31,7 @@ authRouter.post("/logout", authControllers.logoutUserController);
  * @access Private
  */
 
-auth.router.post(
+authRouter.post(
   "/get-me",
   authMiddleware.authUser,
   authControllers.getMeController,
