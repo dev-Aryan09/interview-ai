@@ -121,8 +121,16 @@ async function logoutUserController(req, res) {
   });
 }
 
+/**
+ * @name getMeController
+ * @description get the current logged in user details
+ * @access Private
+ */
+async function getMeController(req, res) {}
+
 module.exports = {
   registerUserController,
   loginUserController,
   logoutUserController,
+  getMeController,
 };
