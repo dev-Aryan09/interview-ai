@@ -1,0 +1,21 @@
+.btn {
+  border: none;
+  outline: none;
+  padding-inline: 1.5rem;
+  padding-block: 0.75rem;
+  border-radius: 1rem;
+  cursor: pointer;
+
+  transition: all 0.3s ease-in-out;
+
+  // & -> refers to the parent selector (.btn here)
+  // so, &.primary-btn = .btn.primary-btn
+  &.primary-btn {
+    background-color: #e1034d;
+    color: white;
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
+}
