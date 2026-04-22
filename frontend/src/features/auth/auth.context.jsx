@@ -6,7 +6,7 @@ export const AuthContext = createContext();
 // wrapper component that provides value to uts descendents
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true); //
 
   return (
     // Make values available to any component inside {children} without prop drilling
