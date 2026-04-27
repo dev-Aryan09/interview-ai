@@ -34,11 +34,11 @@ const mongoose = require("mongoose");
  *  }]
  */
 
-const technicalQuestionsSchema = new mongoose.Schema(
+const technicalQuestionSchema = new mongoose.Schema(
   {
     question: {
       type: String,
-      required: [true, "Question is required"],
+      required: [true, "Techinal question is required"],
     },
     intention: {
       type: String,
@@ -46,7 +46,7 @@ const technicalQuestionsSchema = new mongoose.Schema(
     },
     answer: {
       type: String,
-      required: [true, "Intention is required"],
+      required: [true, "Answer is required"],
     },
   },
   {
@@ -54,11 +54,11 @@ const technicalQuestionsSchema = new mongoose.Schema(
   },
 );
 
-const behavioralQuestionsSchema = new mongoose.Schema(
+const behavioralQuestionSchema = new mongoose.Schema(
   {
     question: {
       type: String,
-      required: [true, "Question is required"],
+      required: [true, "Behavioral question is required"],
     },
     intention: {
       type: String,
@@ -66,7 +66,7 @@ const behavioralQuestionsSchema = new mongoose.Schema(
     },
     answer: {
       type: String,
-      required: [true, "Intention is required"],
+      required: [true, "Answer is required"],
     },
   },
   {
@@ -74,7 +74,7 @@ const behavioralQuestionsSchema = new mongoose.Schema(
   },
 );
 
-const skillGapsSchema = new mongoose.Schema(
+const skillGapSchema = new mongoose.Schema(
   {
     skill: {
       type: String,
@@ -127,12 +127,21 @@ const interviewReportSchema = new mongoose.Schema(
     },
     matchScore: {
       type: Number,
-      required: [true, "Match Score is required"],
+      min: 0,
+      max: 100,
     },
-    technicalQuestions: [technicalQuestionsSchema],
-    behavioralQuestions: [behavioralQuestionsSchema],
-    skillGap: [skillGapsSchema],
+    technicalQuestions: [technicalQuestionSchema],
+    behavioralQuestions: [behavioralQuestionSchema],
+    skillGaps: [skillGapSchema],
     preparationPlan: [preparationPlanSchema],
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+    },
+    title: {
+      type: String,
+      // required: [true, "Title is required"],
+    },
   },
   {
     timestamps: true,
