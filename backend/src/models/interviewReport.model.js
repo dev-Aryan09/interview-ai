@@ -38,7 +38,7 @@ const technicalQuestionSchema = new mongoose.Schema(
   {
     question: {
       type: String,
-      required: [true, "Techinal question is required"],
+      required: [true, "Technical question is required"],
     },
     intention: {
       type: String,
@@ -104,7 +104,7 @@ const preparationPlanSchema = new mongoose.Schema(
     tasks: [
       {
         type: String,
-        required: [true, "tasks is required"],
+        required: [true, "Task is required"],
       },
     ],
   },
@@ -119,7 +119,7 @@ const interviewReportSchema = new mongoose.Schema(
       type: String,
       required: [true, "Job description is required"],
     },
-    resumeText: {
+    resume: {
       type: String,
     },
     selfDescription: {
@@ -136,11 +136,11 @@ const interviewReportSchema = new mongoose.Schema(
     preparationPlan: [preparationPlanSchema],
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "user",
+      ref: "users",
     },
     title: {
       type: String,
-      // required: [true, "Title is required"],
+      required: [true, "Job title is required"],
     },
   },
   {
