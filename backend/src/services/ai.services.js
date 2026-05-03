@@ -98,20 +98,69 @@ async function generateInterviewReport({
   selfDescription,
   jobDescription,
 }) {
-  const prompt = `Generate an interview report for a candidate with the following details:
-                        Resume: ${resume}
-                        Self Description: ${selfDescription}
-                        Job Description: ${jobDescription}
+  const prompt = `You are an expert interview coach. Analyze the candidate's profile and generate a structured interview preparation report.
+
+Resume: ${resume}
+Self Description: ${selfDescription}
+Job Description: ${jobDescription}
+
+Return ONLY a valid JSON object with EXACTLY this structure, no extra fields:
+
+{
+  "matchScore": <number 0-100>,
+  "title": "<job title string>",
+  "technicalQuestions": [
+    {
+      "question": "<question text>",
+      "intention": "<why interviewer asks this>",
+      "answer": "<how to answer this>"
+    }
+  ],
+  "behavioralQuestions": [
+    {
+      "question": "<question text>",
+      "intention": "<why interviewer asks this>",
+      "answer": "<how to answer this>"
+    }
+  ],
+  "skillGaps": [
+    {
+      "skill": "<skill name>",
+      "severity": "<low | medium | high>"
+    }
+  ],
+  "preparationPlan": [
+    {
+      "day": <day number>,
+      "focus": "<focus area>",
+      "tasks": ["<task 1>", "<task 2>"]
+    }
+  ]
+}
+
+STRICT RULES:
+- technicalQuestions must be an array of OBJECTS with keys: question, intention, answer
+- behavioralQuestions must be an array of OBJECTS with keys: question, intention, answer
+- skillGaps must be an array of OBJECTS with keys: skill, severity
+- preparationPlan must be an array of OBJECTS with keys: day, focus, tasks
+- severity must be exactly one of: low, medium, high
+- tasks must be an array of strings
+- Do NOT return arrays of strings
+- Do NOT use duplicate keys
+- Return ONLY the JSON, no explanation, no markdown
 `;
 
   const response = await ai.models.generateContent({
-    model: "gemini-3-flash-preview",
+    model: "gemini-2.5-flash",
     contents: prompt,
     config: {
       responseMimeType: "application/json",
-      responseSchema: zodToJsonSchema(interviewReportSchema),
+      /* AI model is ignoring this, so removed it */
+      // responseSchema: zodToJsonSchema(interviewReportSchema),
     },
   });
+
+  console.log("RESPONSE", response.text.trim());
 
   return JSON.parse(response.text);
 }
